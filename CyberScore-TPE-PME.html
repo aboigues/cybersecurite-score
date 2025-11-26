@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberScore TPE-PME</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .privacy-notice {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .privacy-notice p {
+            color: #234e52;
+            font-weight: 500;
+        }
+
+        fieldset {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            background: #f7fafc;
+        }
+
+        legend {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2d3748;
+            padding: 0 10px;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .question-explanation {
+            color: #4a5568;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .radio-option label {
+            cursor: pointer;
+            font-size: 1em;
+            color: #2d3748;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-calculate {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-reset {
+            background: #cbd5e0;
+            color: #2d3748;
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        #result.show {
+            display: block;
+        }
+
+        .score-letter {
+            font-size: 5em;
+            font-weight: bold;
+            margin: 20px 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .score-details {
+            font-size: 1.3em;
+            color: white;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .score-interpretation {
+            font-size: 1.1em;
+            color: white;
+            margin-top: 15px;
+            line-height: 1.6;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .grade-A { background: linear-gradient(135deg, #0f9960 0%, #15b371 100%); }
+        .grade-B { background: linear-gradient(135deg, #37b24d 0%, #51cf66 100%); }
+        .grade-C { background: linear-gradient(135deg, #f59f00 0%, #fab005 100%); }
+        .grade-D { background: linear-gradient(135deg, #fd7e14 0%, #ff8c42 100%); }
+        .grade-E { background: linear-gradient(135deg, #f03e3e 0%, #ff6b6b 100%); }
+        .grade-F { background: linear-gradient(135deg, #c92a2a 0%, #e03131 100%); }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 CyberScore TPE-PME</h1>
+        <p class="subtitle">Évaluez votre niveau de sécurité informatique en quelques minutes</p>
+
+        <div class="privacy-notice">
+            <p>🔐 <strong>Confidentialité totale :</strong> Vos réponses restent strictement sur votre ordinateur. Rien n'est transmis ni sauvegardé.</p>
+        </div>
+
+        <form id="cyberscoreForm">
+            <!-- PILIER 1 : Gouvernance & comportements -->
+            <fieldset>
+                <legend>📋 Pilier 1 — Gouvernance & Comportements</legend>
+
+                <div class="question">
+                    <div class="question-title">1. Reconnaître un message suspect</div>
+                    <div class="question-explanation">Savez-vous identifier un e-mail ou SMS frauduleux (fautes, expéditeur étrange, lien bizarre) ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q1_oui" name="q1" value="4" required>
+                            <label for="q1_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q1_partie" name="q1" value="2">
+                            <label for="q1_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q1_non" name="q1" value="0">
+                            <label for="q1_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">2. Règle "en cas de doute, je n'agis pas"</div>
+                    <div class="question-explanation">Avez-vous le réflexe de ne pas cliquer ou répondre si quelque chose vous semble louche ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q2_oui" name="q2" value="4" required>
+                            <label for="q2_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q2_partie" name="q2" value="2">
+                            <label for="q2_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q2_non" name="q2" value="0">
+                            <label for="q2_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">3. 2-3 règles de sécurité expliquées en 30 secondes</div>
+                    <div class="question-explanation">Pouvez-vous expliquer simplement les règles de base de sécurité à un collègue ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q3_oui" name="q3" value="4" required>
+                            <label for="q3_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q3_partie" name="q3" value="2">
+                            <label for="q3_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q3_non" name="q3" value="0">
+                            <label for="q3_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">4. Personne référente identifiée</div>
+                    <div class="question-explanation">Y a-t-il quelqu'un dans l'entreprise (ou un contact externe) qui s'occupe de la sécurité informatique ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q4_oui" name="q4" value="4" required>
+                            <label for="q4_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q4_partie" name="q4" value="2">
+                            <label for="q4_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q4_non" name="q4" value="0">
+                            <label for="q4_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">5. Petit rituel de rappel (5 min/mois)</div>
+                    <div class="question-explanation">Faites-vous un point régulier (même court) pour rappeler les bonnes pratiques de sécurité ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q5_oui" name="q5" value="4" required>
+                            <label for="q5_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q5_partie" name="q5" value="2">
+                            <label for="q5_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q5_non" name="q5" value="0">
+                            <label for="q5_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- PILIER 2 : Accès & identités -->
+            <fieldset>
+                <legend>🔑 Pilier 2 — Accès & Identités</legend>
+
+                <div class="question">
+                    <div class="question-title">6. Sécurité renforcée sur comptes importants</div>
+                    <div class="question-explanation">Utilisez-vous une double vérification (code SMS, application) sur vos comptes essentiels (messagerie, banque, etc.) ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q6_oui" name="q6" value="4" required>
+                            <label for="q6_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q6_partie" name="q6" value="2">
+                            <label for="q6_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q6_non" name="q6" value="0">
+                            <label for="q6_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">7. Revue annuelle des accès</div>
+                    <div class="question-explanation">Vérifiez-vous au moins une fois par an qui a accès à quoi dans vos systèmes ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q7_oui" name="q7" value="4" required>
+                            <label for="q7_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q7_partie" name="q7" value="2">
+                            <label for="q7_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q7_non" name="q7" value="0">
+                            <label for="q7_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">8. Suppression rapide des accès des sortants</div>
+                    <div class="question-explanation">Quand quelqu'un quitte l'entreprise, supprimez-vous immédiatement ses accès aux systèmes ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q8_oui" name="q8" value="4" required>
+                            <label for="q8_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q8_partie" name="q8" value="2">
+                            <label for="q8_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q8_non" name="q8" value="0">
+                            <label for="q8_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">9. Mot de passe administrateur protégé</div>
+                    <div class="question-explanation">Les mots de passe administrateurs (accès complet) sont-ils différents des mots de passe normaux et bien protégés ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q9_oui" name="q9" value="4" required>
+                            <label for="q9_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q9_partie" name="q9" value="2">
+                            <label for="q9_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q9_non" name="q9" value="0">
+                            <label for="q9_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">10. Suppression des comptes temporaires/invités</div>
+                    <div class="question-explanation">Supprimez-vous les comptes créés temporairement (stagiaires, prestataires) après leur départ ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q10_oui" name="q10" value="4" required>
+                            <label for="q10_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q10_partie" name="q10" value="2">
+                            <label for="q10_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q10_non" name="q10" value="0">
+                            <label for="q10_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- PILIER 3 : Sauvegardes & continuité -->
+            <fieldset>
+                <legend>💾 Pilier 3 — Sauvegardes & Continuité</legend>
+
+                <div class="question">
+                    <div class="question-title">11. Sauvegarde séparée</div>
+                    <div class="question-explanation">Vos sauvegardes sont-elles stockées ailleurs que sur votre ordinateur principal (disque externe déconnecté, cloud, etc.) ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q11_oui" name="q11" value="4" required>
+                            <label for="q11_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q11_partie" name="q11" value="2">
+                            <label for="q11_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q11_non" name="q11" value="0">
+                            <label for="q11_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">12. Test de restauration</div>
+                    <div class="question-explanation">Avez-vous déjà testé que vous pouviez récupérer vos données depuis vos sauvegardes ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q12_oui" name="q12" value="4" required>
+                            <label for="q12_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q12_partie" name="q12" value="2">
+                            <label for="q12_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q12_non" name="q12" value="0">
+                            <label for="q12_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">13. Données critiques identifiées</div>
+                    <div class="question-explanation">Savez-vous quelles sont les données absolument essentielles à votre activité (clients, factures, projets) ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q13_oui" name="q13" value="4" required>
+                            <label for="q13_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q13_partie" name="q13" value="2">
+                            <label for="q13_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q13_non" name="q13" value="0">
+                            <label for="q13_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">14. Mini plan d'urgence (1 page)</div>
+                    <div class="question-explanation">Avez-vous un document simple qui explique quoi faire en cas de panne ou de piratage ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q14_oui" name="q14" value="4" required>
+                            <label for="q14_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q14_partie" name="q14" value="2">
+                            <label for="q14_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q14_non" name="q14" value="0">
+                            <label for="q14_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">15. Sauvegarde protégée contre ransomwares</div>
+                    <div class="question-explanation">Vos sauvegardes sont-elles à l'abri d'une attaque (déconnectées, en lecture seule, verrouillées) ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q15_oui" name="q15" value="4" required>
+                            <label for="q15_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q15_partie" name="q15" value="2">
+                            <label for="q15_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q15_non" name="q15" value="0">
+                            <label for="q15_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- PILIER 4 : Parc informatique -->
+            <fieldset>
+                <legend>💻 Pilier 4 — Parc Informatique</legend>
+
+                <div class="question">
+                    <div class="question-title">16. Liste claire des appareils</div>
+                    <div class="question-explanation">Avez-vous une liste des ordinateurs, téléphones et tablettes utilisés dans l'entreprise ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q16_oui" name="q16" value="4" required>
+                            <label for="q16_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q16_partie" name="q16" value="2">
+                            <label for="q16_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q16_non" name="q16" value="0">
+                            <label for="q16_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">17. Appareils personnels encadrés</div>
+                    <div class="question-explanation">Si des appareils personnels sont utilisés pour le travail, y a-t-il des règles de sécurité minimales ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q17_oui" name="q17" value="4" required>
+                            <label for="q17_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q17_partie" name="q17" value="2">
+                            <label for="q17_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q17_non" name="q17" value="0">
+                            <label for="q17_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">18. Mises à jour automatiques</div>
+                    <div class="question-explanation">Les mises à jour de sécurité de vos ordinateurs et logiciels s'installent-elles automatiquement ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q18_oui" name="q18" value="4" required>
+                            <label for="q18_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q18_partie" name="q18" value="2">
+                            <label for="q18_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q18_non" name="q18" value="0">
+                            <label for="q18_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">19. Antivirus/EDR actif</div>
+                    <div class="question-explanation">Y a-t-il un antivirus ou une protection active sur tous vos ordinateurs ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q19_oui" name="q19" value="4" required>
+                            <label for="q19_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q19_partie" name="q19" value="2">
+                            <label for="q19_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q19_non" name="q19" value="0">
+                            <label for="q19_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">20. Comptes administrateurs limités</div>
+                    <div class="question-explanation">Utilisez-vous un compte normal (non administrateur) pour le travail quotidien ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q20_oui" name="q20" value="4" required>
+                            <label for="q20_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q20_partie" name="q20" value="2">
+                            <label for="q20_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q20_non" name="q20" value="0">
+                            <label for="q20_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- PILIER 5 : Fournisseurs & outils -->
+            <fieldset>
+                <legend>🤝 Pilier 5 — Fournisseurs & Outils</legend>
+
+                <div class="question">
+                    <div class="question-title">21. Outils critiques identifiés</div>
+                    <div class="question-explanation">Savez-vous quels sont les outils ou services essentiels dont dépend votre activité (logiciel de facturation, CRM, etc.) ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q21_oui" name="q21" value="4" required>
+                            <label for="q21_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q21_partie" name="q21" value="2">
+                            <label for="q21_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q21_non" name="q21" value="0">
+                            <label for="q21_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">22. Vérification minimale des fournisseurs</div>
+                    <div class="question-explanation">Avant d'utiliser un nouvel outil ou service, vérifiez-vous un minimum sa fiabilité et sa sécurité ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q22_oui" name="q22" value="4" required>
+                            <label for="q22_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q22_partie" name="q22" value="2">
+                            <label for="q22_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q22_non" name="q22" value="0">
+                            <label for="q22_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">23. Nettoyage annuel des accès/outils</div>
+                    <div class="question-explanation">Faites-vous le ménage dans les outils et accès que vous n'utilisez plus au moins une fois par an ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q23_oui" name="q23" value="4" required>
+                            <label for="q23_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q23_partie" name="q23" value="2">
+                            <label for="q23_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q23_non" name="q23" value="0">
+                            <label for="q23_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">24. Transferts de fichiers encadrés</div>
+                    <div class="question-explanation">Utilisez-vous des moyens sécurisés pour échanger des fichiers sensibles (plateformes sécurisées, pas de clés USB inconnues) ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q24_oui" name="q24" value="4" required>
+                            <label for="q24_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q24_partie" name="q24" value="2">
+                            <label for="q24_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q24_non" name="q24" value="0">
+                            <label for="q24_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">25. Suppression des outils obsolètes</div>
+                    <div class="question-explanation">Supprimez-vous les anciens logiciels ou services que vous n'utilisez plus ?</div>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="q25_oui" name="q25" value="4" required>
+                            <label for="q25_oui">Oui</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q25_partie" name="q25" value="2">
+                            <label for="q25_partie">En partie</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="q25_non" name="q25" value="0">
+                            <label for="q25_non">Non</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="buttons-container">
+                <button type="button" class="btn-calculate" onclick="calculateScore()">🎯 Calculer mon CyberScore</button>
+                <button type="button" class="btn-reset" onclick="resetForm()">🔄 Réinitialiser</button>
+            </div>
+        </form>
+
+        <div id="result">
+            <div class="score-letter" id="scoreLetter"></div>
+            <div class="score-details" id="scoreDetails"></div>
+            <div class="score-interpretation" id="scoreInterpretation"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateScore() {
+            const form = document.getElementById('cyberscoreForm');
+
+            // Vérifier que toutes les questions ont une réponse
+            let allAnswered = true;
+            for (let i = 1; i <= 25; i++) {
+                const radioGroup = form.elements['q' + i];
+                let answered = false;
+                for (let j = 0; j < radioGroup.length; j++) {
+                    if (radioGroup[j].checked) {
+                        answered = true;
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+
+            if (!allAnswered) {
+                alert('⚠️ Veuillez répondre à toutes les questions avant de calculer votre score.');
+                return;
+            }
+
+            // Calculer le score total
+            let totalScore = 0;
+            for (let i = 1; i <= 25; i++) {
+                const radioGroup = form.elements['q' + i];
+                for (let j = 0; j < radioGroup.length; j++) {
+                    if (radioGroup[j].checked) {
+                        totalScore += parseInt(radioGroup[j].value);
+                        break;
+                    }
+                }
+            }
+
+            // Déterminer la lettre et l'interprétation
+            let letter, interpretation, gradeClass;
+
+            if (totalScore >= 86) {
+                letter = 'A';
+                gradeClass = 'grade-A';
+                interpretation = '🎉 Excellent ! Votre niveau de sécurité est exemplaire. Continuez ces bonnes pratiques et restez vigilant.';
+            } else if (totalScore >= 71) {
+                letter = 'B';
+                gradeClass = 'grade-B';
+                interpretation = '👍 Bon niveau ! Vous avez de solides bases en sécurité. Quelques améliorations permettraient d\'atteindre l\'excellence.';
+            } else if (totalScore >= 51) {
+                letter = 'C';
+                gradeClass = 'grade-C';
+                interpretation = '⚠️ Correct, mais améliorable. Votre sécurité de base est présente, mais des efforts sont nécessaires pour mieux vous protéger.';
+            } else if (totalScore >= 31) {
+                letter = 'D';
+                gradeClass = 'grade-D';
+                interpretation = '😟 Insuffisant. Votre niveau de sécurité présente des failles importantes. Des actions prioritaires sont nécessaires rapidement.';
+            } else if (totalScore >= 16) {
+                letter = 'E';
+                gradeClass = 'grade-E';
+                interpretation = '🚨 Très insuffisant. Votre entreprise est vulnérable. Il est urgent d\'améliorer votre sécurité informatique.';
+            } else {
+                letter = 'F';
+                gradeClass = 'grade-F';
+                interpretation = '⛔ Critique ! Votre situation est très dangereuse. Contactez immédiatement un professionnel pour sécuriser votre activité.';
+            }
+
+            // Afficher le résultat
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = gradeClass + ' show';
+            document.getElementById('scoreLetter').textContent = letter;
+            document.getElementById('scoreDetails').textContent = `Votre CyberScore est : ${totalScore} points — Niveau : ${letter}`;
+            document.getElementById('scoreInterpretation').textContent = interpretation;
+
+            // Scroll vers le résultat
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function resetForm() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser le formulaire ?')) {
+                document.getElementById('cyberscoreForm').reset();
+                const resultDiv = document.getElementById('result');
+                resultDiv.classList.remove('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
