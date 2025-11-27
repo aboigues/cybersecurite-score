@@ -233,6 +233,129 @@
         .grade-E { background: linear-gradient(135deg, #f03e3e 0%, #ff6b6b 100%); }
         .grade-F { background: linear-gradient(135deg, #c92a2a 0%, #e03131 100%); }
 
+        .actions-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            color: #2d3748;
+        }
+
+        .actions-section h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .action-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .action-priority {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            white-space: nowrap;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .action-priority.high {
+            background: #e53e3e;
+        }
+
+        .action-priority.medium {
+            background: #f59f00;
+        }
+
+        .action-priority.low {
+            background: #37b24d;
+        }
+
+        .action-content {
+            flex: 1;
+        }
+
+        .action-content strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2d3748;
+        }
+
+        .action-content p {
+            color: #4a5568;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .accompaniment-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .accompaniment-section h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .accompaniment-section p {
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .accompaniment-section .btn-linkedin {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #0077b5;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .accompaniment-section .btn-linkedin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .human-dimension-reminder {
+            margin-top: 25px;
+            padding: 20px;
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            border-radius: 5px;
+        }
+
+        .human-dimension-reminder h4 {
+            color: #234e52;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .human-dimension-reminder p {
+            color: #234e52;
+            line-height: 1.6;
+            margin: 0;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -250,13 +373,21 @@
             button {
                 width: 100%;
             }
+
+            .action-item {
+                flex-direction: column;
+            }
+
+            .action-priority {
+                align-self: flex-start;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>CyberScore TPE-PME</h1>
-        <p class="subtitle">Évaluez votre niveau de sécurité informatique - Durée estimée : 10 minutes</p>
+        <p class="subtitle">Un outil simple pour évaluer le niveau de sécurité de votre TPE/PME - Durée estimée : 10 minutes</p>
 
         <div class="privacy-notice">
             <p><strong>Confidentialité totale :</strong> Vos réponses restent strictement sur votre ordinateur. Rien n'est transmis ni sauvegardé.</p>
@@ -784,6 +915,27 @@
                     <div class="scale-item scale-F">F : 0-15 pts</div>
                 </div>
             </div>
+
+            <!-- Actions recommandées -->
+            <div class="actions-section" id="actionsSection">
+                <h3>Actions prioritaires recommandées</h3>
+                <div id="actionsList"></div>
+            </div>
+
+            <!-- Section d'accompagnement -->
+            <div class="accompaniment-section" id="accompanimentSection" style="display: none;">
+                <h3>🤝 Besoin d'accompagnement ?</h3>
+                <p>Votre score indique des vulnérabilités importantes qui nécessitent une attention urgente. Je peux vous aider à mettre en place un plan d'action adapté à votre TPE/PME.</p>
+                <a href="https://www.linkedin.com/in/alexandre-boigues/" target="_blank" class="btn-linkedin">
+                    Contactez-moi sur LinkedIn
+                </a>
+            </div>
+
+            <!-- Rappel dimension humaine -->
+            <div class="human-dimension-reminder">
+                <h4>💡 Ne perdez pas de vue l'essentiel</h4>
+                <p>Ces actions techniques ne doivent pas faire oublier la dimension humaine de la cybersécurité. Mon approche prend en compte cet aspect essentiel en limitant la surcharge cognitive : des mesures simples, progressives et adaptées à votre réalité quotidienne pour protéger efficacement votre activité sans vous submerger.</p>
+            </div>
         </div>
     </div>
 
@@ -874,8 +1026,163 @@
             document.getElementById('scoreDetails').textContent = `Votre CyberScore est : ${totalScore} points — Niveau : ${letter}`;
             document.getElementById('scoreInterpretation').textContent = interpretation;
 
+            // Générer les actions recommandées
+            generateActions(form, totalScore);
+
+            // Afficher l'accompagnement si score faible (D, E, F)
+            const accompanimentSection = document.getElementById('accompanimentSection');
+            if (totalScore < 51) {
+                accompanimentSection.style.display = 'block';
+            } else {
+                accompanimentSection.style.display = 'none';
+            }
+
             // Scroll vers le résultat
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function generateActions(form, totalScore) {
+            const actionsList = document.getElementById('actionsList');
+            actionsList.innerHTML = '';
+
+            // Définir les questions par pilier avec leurs actions recommandées
+            const pillars = {
+                'Gouvernance & Comportements': {
+                    questions: [1, 2, 3, 4, 5],
+                    actions: [
+                        { priority: 'high', title: 'Sensibiliser l\'équipe au phishing', desc: 'Organiser une session de 15 minutes pour apprendre à reconnaître les messages frauduleux (fautes, liens suspects, urgence artificielle).' },
+                        { priority: 'high', title: 'Établir la règle du doute', desc: 'Encourager systématiquement la vérification avant toute action sur un message suspect : appeler l\'expéditeur, ne jamais cliquer précipitamment.' },
+                        { priority: 'medium', title: 'Désigner un référent sécurité', desc: 'Identifier une personne (interne ou externe) vers qui se tourner en cas de question ou d\'incident de sécurité.' },
+                        { priority: 'medium', title: 'Mettre en place un rituel mensuel', desc: 'Consacrer 5 minutes par mois pour rappeler les bonnes pratiques de sécurité lors d\'une réunion d\'équipe.' }
+                    ]
+                },
+                'Accès & Identités': {
+                    questions: [6, 7, 8, 9, 10],
+                    actions: [
+                        { priority: 'high', title: 'Activer la double authentification', desc: 'Mettre en place la vérification en deux étapes (2FA) sur tous les comptes critiques : messagerie, banque, outils métier essentiels.' },
+                        { priority: 'high', title: 'Sécuriser les mots de passe administrateurs', desc: 'Utiliser des mots de passe différents et complexes pour les comptes administrateurs, les stocker dans un coffre-fort numérique.' },
+                        { priority: 'medium', title: 'Planifier une revue annuelle des accès', desc: 'Programmer un rappel annuel pour vérifier qui a accès à quoi dans vos systèmes et supprimer les accès inutiles.' },
+                        { priority: 'medium', title: 'Établir un processus de départ', desc: 'Créer une checklist simple pour supprimer immédiatement tous les accès d\'un collaborateur qui quitte l\'entreprise.' }
+                    ]
+                },
+                'Sauvegardes & Continuité': {
+                    questions: [11, 12, 13, 14, 15],
+                    actions: [
+                        { priority: 'high', title: 'Mettre en place des sauvegardes séparées', desc: 'Sauvegarder vos données critiques sur un support externe déconnecté ou dans le cloud avec versioning.' },
+                        { priority: 'high', title: 'Tester la restauration des sauvegardes', desc: 'Effectuer un test de restauration de vos sauvegardes pour vérifier qu\'elles fonctionnent réellement.' },
+                        { priority: 'medium', title: 'Identifier les données critiques', desc: 'Lister les fichiers et données absolument essentiels à votre activité (clients, factures, projets en cours).' },
+                        { priority: 'low', title: 'Créer un mini plan d\'urgence', desc: 'Rédiger une page simple avec les actions à prendre et les contacts à appeler en cas de panne ou de piratage.' }
+                    ]
+                },
+                'Parc Informatique': {
+                    questions: [16, 17, 18, 19, 20],
+                    actions: [
+                        { priority: 'high', title: 'Activer les mises à jour automatiques', desc: 'Configurer tous les ordinateurs et logiciels pour qu\'ils s\'actualisent automatiquement (Windows Update, navigateurs, etc.).' },
+                        { priority: 'high', title: 'Installer et maintenir un antivirus', desc: 'Vérifier qu\'un antivirus actif et à jour est présent sur tous les postes de travail.' },
+                        { priority: 'medium', title: 'Inventorier les appareils', desc: 'Créer et maintenir une liste simple des ordinateurs, téléphones et tablettes utilisés dans l\'entreprise.' },
+                        { priority: 'medium', title: 'Utiliser des comptes non-administrateurs', desc: 'Configurer des comptes utilisateurs normaux pour le travail quotidien, réserver les droits administrateurs pour les installations.' }
+                    ]
+                },
+                'Fournisseurs & Outils': {
+                    questions: [21, 22, 23, 24, 25],
+                    actions: [
+                        { priority: 'medium', title: 'Identifier les outils critiques', desc: 'Lister les logiciels et services dont dépend vraiment votre activité (facturation, CRM, comptabilité, etc.).' },
+                        { priority: 'medium', title: 'Vérifier les nouveaux fournisseurs', desc: 'Avant d\'adopter un nouvel outil, vérifier sa réputation, ses conditions de sécurité et où sont stockées vos données.' },
+                        { priority: 'low', title: 'Nettoyer les accès inutilisés', desc: 'Faire un ménage annuel des comptes, applications et services que vous n\'utilisez plus.' },
+                        { priority: 'low', title: 'Sécuriser les échanges de fichiers', desc: 'Utiliser des plateformes sécurisées pour partager des documents sensibles, éviter les clés USB d\'origine inconnue.' }
+                    ]
+                }
+            };
+
+            // Analyser les réponses pour identifier les piliers faibles
+            const pillarScores = {};
+            for (const [pillarName, pillarData] of Object.entries(pillars)) {
+                let pillarScore = 0;
+                let maxPillarScore = pillarData.questions.length * 4;
+
+                for (const qNum of pillarData.questions) {
+                    const radioGroup = form.elements['q' + qNum];
+                    for (let j = 0; j < radioGroup.length; j++) {
+                        if (radioGroup[j].checked) {
+                            pillarScore += parseInt(radioGroup[j].value);
+                            break;
+                        }
+                    }
+                }
+
+                pillarScores[pillarName] = {
+                    score: pillarScore,
+                    maxScore: maxPillarScore,
+                    percentage: (pillarScore / maxPillarScore) * 100,
+                    actions: pillarData.actions
+                };
+            }
+
+            // Trier les piliers par score (du plus faible au plus fort)
+            const sortedPillars = Object.entries(pillarScores).sort((a, b) => a[1].percentage - b[1].percentage);
+
+            // Générer les recommandations selon le score global
+            let recommendedActions = [];
+
+            if (totalScore < 31) {
+                // Score F ou E : actions urgentes de tous les piliers faibles
+                for (const [pillarName, pillarData] of sortedPillars.slice(0, 3)) {
+                    recommendedActions.push(...pillarData.actions.filter(a => a.priority === 'high'));
+                }
+                // Ajouter quelques actions moyennes
+                for (const [pillarName, pillarData] of sortedPillars.slice(0, 2)) {
+                    recommendedActions.push(...pillarData.actions.filter(a => a.priority === 'medium').slice(0, 1));
+                }
+            } else if (totalScore < 51) {
+                // Score D : focus sur les 3 piliers les plus faibles
+                for (const [pillarName, pillarData] of sortedPillars.slice(0, 3)) {
+                    recommendedActions.push(...pillarData.actions.filter(a => a.priority === 'high').slice(0, 1));
+                    recommendedActions.push(...pillarData.actions.filter(a => a.priority === 'medium').slice(0, 1));
+                }
+            } else if (totalScore < 71) {
+                // Score C : amélioration progressive
+                for (const [pillarName, pillarData] of sortedPillars.slice(0, 3)) {
+                    if (pillarData.percentage < 70) {
+                        recommendedActions.push(...pillarData.actions.filter(a => a.priority === 'high' || a.priority === 'medium').slice(0, 2));
+                    }
+                }
+            } else if (totalScore < 86) {
+                // Score B : peaufiner les derniers détails
+                for (const [pillarName, pillarData] of sortedPillars.slice(0, 2)) {
+                    if (pillarData.percentage < 80) {
+                        recommendedActions.push(...pillarData.actions.slice(0, 2));
+                    }
+                }
+            } else {
+                // Score A : maintenir et améliorer
+                recommendedActions = [
+                    { priority: 'low', title: 'Maintenir vos bonnes pratiques', desc: 'Continuez à appliquer rigoureusement vos mesures de sécurité actuelles.' },
+                    { priority: 'low', title: 'Rester vigilant', desc: 'Les menaces évoluent constamment. Restez informé des nouvelles pratiques de sécurité.' },
+                    { priority: 'low', title: 'Partager votre expérience', desc: 'Votre niveau de sécurité est exemplaire. Partagez vos bonnes pratiques avec d\'autres TPE/PME.' }
+                ];
+            }
+
+            // Limiter le nombre d'actions pour éviter la surcharge cognitive
+            const maxActions = totalScore < 31 ? 8 : totalScore < 51 ? 6 : totalScore < 71 ? 5 : 3;
+            recommendedActions = recommendedActions.slice(0, maxActions);
+
+            // Afficher les actions
+            recommendedActions.forEach(action => {
+                const actionDiv = document.createElement('div');
+                actionDiv.className = 'action-item';
+                actionDiv.innerHTML = `
+                    <div class="action-priority ${action.priority}">${
+                        action.priority === 'high' ? 'URGENT' :
+                        action.priority === 'medium' ? 'Important' :
+                        'Recommandé'
+                    }</div>
+                    <div class="action-content">
+                        <strong>${action.title}</strong>
+                        <p>${action.desc}</p>
+                    </div>
+                `;
+                actionsList.appendChild(actionDiv);
+            });
         }
 
         function resetForm() {
