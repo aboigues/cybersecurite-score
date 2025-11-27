@@ -75,6 +75,12 @@
             background: white;
             border-radius: 8px;
             border-left: 4px solid #667eea;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .question.unanswered {
+            border-left-color: #e53e3e;
+            box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.2);
         }
 
         .question-title {
@@ -185,6 +191,41 @@
             border-radius: 8px;
         }
 
+        .score-scale {
+            margin-top: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            color: #2d3748;
+        }
+
+        .score-scale h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .scale-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .scale-item {
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        .scale-item.scale-A { background: linear-gradient(135deg, #0f9960 0%, #15b371 100%); }
+        .scale-item.scale-B { background: linear-gradient(135deg, #37b24d 0%, #51cf66 100%); }
+        .scale-item.scale-C { background: linear-gradient(135deg, #f59f00 0%, #fab005 100%); }
+        .scale-item.scale-D { background: linear-gradient(135deg, #fd7e14 0%, #ff8c42 100%); }
+        .scale-item.scale-E { background: linear-gradient(135deg, #f03e3e 0%, #ff6b6b 100%); }
+        .scale-item.scale-F { background: linear-gradient(135deg, #c92a2a 0%, #e03131 100%); }
+
         .grade-A { background: linear-gradient(135deg, #0f9960 0%, #15b371 100%); }
         .grade-B { background: linear-gradient(135deg, #37b24d 0%, #51cf66 100%); }
         .grade-C { background: linear-gradient(135deg, #f59f00 0%, #fab005 100%); }
@@ -214,21 +255,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔒 CyberScore TPE-PME</h1>
-        <p class="subtitle">Évaluez votre niveau de sécurité informatique en quelques minutes</p>
+        <h1>CyberScore TPE-PME</h1>
+        <p class="subtitle">Évaluez votre niveau de sécurité informatique - Durée estimée : 10 minutes</p>
 
         <div class="privacy-notice">
-            <p>🔐 <strong>Confidentialité totale :</strong> Vos réponses restent strictement sur votre ordinateur. Rien n'est transmis ni sauvegardé.</p>
+            <p><strong>Confidentialité totale :</strong> Vos réponses restent strictement sur votre ordinateur. Rien n'est transmis ni sauvegardé.</p>
         </div>
 
         <form id="cyberscoreForm">
             <!-- PILIER 1 : Gouvernance & comportements -->
             <fieldset>
-                <legend>📋 Pilier 1 — Gouvernance & Comportements</legend>
+                <legend>Pilier 1 — Gouvernance & Comportements</legend>
 
                 <div class="question">
                     <div class="question-title">1. Reconnaître un message suspect</div>
-                    <div class="question-explanation">Savez-vous identifier un e-mail ou SMS frauduleux (fautes, expéditeur étrange, lien bizarre) ?</div>
+                    <div class="question-explanation">Vous et votre équipe, savez-vous identifier un e-mail ou SMS frauduleux (fautes, expéditeur étrange, lien bizarre) ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q1_oui" name="q1" value="4" required>
@@ -247,7 +288,7 @@
 
                 <div class="question">
                     <div class="question-title">2. Règle "en cas de doute, je n'agis pas"</div>
-                    <div class="question-explanation">Avez-vous le réflexe de ne pas cliquer ou répondre si quelque chose vous semble louche ?</div>
+                    <div class="question-explanation">Vous et votre équipe, avez-vous le réflexe de ne pas cliquer ou répondre si quelque chose vous semble louche ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q2_oui" name="q2" value="4" required>
@@ -266,7 +307,7 @@
 
                 <div class="question">
                     <div class="question-title">3. 2-3 règles de sécurité expliquées en 30 secondes</div>
-                    <div class="question-explanation">Pouvez-vous expliquer simplement les règles de base de sécurité à un collègue ?</div>
+                    <div class="question-explanation">Vous et votre équipe, pouvez-vous expliquer simplement les règles de base de sécurité ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q3_oui" name="q3" value="4" required>
@@ -285,7 +326,7 @@
 
                 <div class="question">
                     <div class="question-title">4. Personne référente identifiée</div>
-                    <div class="question-explanation">Y a-t-il quelqu'un dans l'entreprise (ou un contact externe) qui s'occupe de la sécurité informatique ?</div>
+                    <div class="question-explanation">Avez-vous identifié une personne référente dans l'entreprise (ou un contact externe) qui s'occupe de la sécurité informatique pour vous et votre équipe ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q4_oui" name="q4" value="4" required>
@@ -304,7 +345,7 @@
 
                 <div class="question">
                     <div class="question-title">5. Petit rituel de rappel (5 min/mois)</div>
-                    <div class="question-explanation">Faites-vous un point régulier (même court) pour rappeler les bonnes pratiques de sécurité ?</div>
+                    <div class="question-explanation">Vous et votre équipe, faites-vous un point régulier (même court) pour rappeler les bonnes pratiques de sécurité ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q5_oui" name="q5" value="4" required>
@@ -324,11 +365,11 @@
 
             <!-- PILIER 2 : Accès & identités -->
             <fieldset>
-                <legend>🔑 Pilier 2 — Accès & Identités</legend>
+                <legend>Pilier 2 — Accès & Identités</legend>
 
                 <div class="question">
                     <div class="question-title">6. Sécurité renforcée sur comptes importants</div>
-                    <div class="question-explanation">Utilisez-vous une double vérification (code SMS, application) sur vos comptes essentiels (messagerie, banque, etc.) ?</div>
+                    <div class="question-explanation">Vous et votre équipe, utilisez-vous une double vérification (code SMS, application) sur vos comptes essentiels (messagerie, banque, etc.) ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q6_oui" name="q6" value="4" required>
@@ -347,7 +388,7 @@
 
                 <div class="question">
                     <div class="question-title">7. Revue annuelle des accès</div>
-                    <div class="question-explanation">Vérifiez-vous au moins une fois par an qui a accès à quoi dans vos systèmes ?</div>
+                    <div class="question-explanation">Vérifiez-vous au moins une fois par an qui a accès à quoi dans vos systèmes (vous et votre équipe) ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q7_oui" name="q7" value="4" required>
@@ -366,7 +407,7 @@
 
                 <div class="question">
                     <div class="question-title">8. Suppression rapide des accès des sortants</div>
-                    <div class="question-explanation">Quand quelqu'un quitte l'entreprise, supprimez-vous immédiatement ses accès aux systèmes ?</div>
+                    <div class="question-explanation">Quand quelqu'un de votre équipe quitte l'entreprise, supprimez-vous immédiatement ses accès aux systèmes ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q8_oui" name="q8" value="4" required>
@@ -385,7 +426,7 @@
 
                 <div class="question">
                     <div class="question-title">9. Mot de passe administrateur protégé</div>
-                    <div class="question-explanation">Les mots de passe administrateurs (accès complet) sont-ils différents des mots de passe normaux et bien protégés ?</div>
+                    <div class="question-explanation">Pour vous et votre équipe, les mots de passe administrateurs (accès complet) sont-ils différents des mots de passe normaux et bien protégés ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q9_oui" name="q9" value="4" required>
@@ -404,7 +445,7 @@
 
                 <div class="question">
                     <div class="question-title">10. Suppression des comptes temporaires/invités</div>
-                    <div class="question-explanation">Supprimez-vous les comptes créés temporairement (stagiaires, prestataires) après leur départ ?</div>
+                    <div class="question-explanation">Supprimez-vous les comptes créés temporairement pour votre équipe (stagiaires, prestataires) après leur départ ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q10_oui" name="q10" value="4" required>
@@ -424,11 +465,11 @@
 
             <!-- PILIER 3 : Sauvegardes & continuité -->
             <fieldset>
-                <legend>💾 Pilier 3 — Sauvegardes & Continuité</legend>
+                <legend>Pilier 3 — Sauvegardes & Continuité</legend>
 
                 <div class="question">
                     <div class="question-title">11. Sauvegarde séparée</div>
-                    <div class="question-explanation">Vos sauvegardes sont-elles stockées ailleurs que sur votre ordinateur principal (disque externe déconnecté, cloud, etc.) ?</div>
+                    <div class="question-explanation">Vos sauvegardes (pour vous et votre équipe) sont-elles stockées ailleurs que sur votre ordinateur principal (disque externe déconnecté, cloud, etc.) ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q11_oui" name="q11" value="4" required>
@@ -447,7 +488,7 @@
 
                 <div class="question">
                     <div class="question-title">12. Test de restauration</div>
-                    <div class="question-explanation">Avez-vous déjà testé que vous pouviez récupérer vos données depuis vos sauvegardes ?</div>
+                    <div class="question-explanation">Vous ou votre équipe, avez-vous déjà testé que vous pouviez récupérer vos données depuis vos sauvegardes ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q12_oui" name="q12" value="4" required>
@@ -466,7 +507,7 @@
 
                 <div class="question">
                     <div class="question-title">13. Données critiques identifiées</div>
-                    <div class="question-explanation">Savez-vous quelles sont les données absolument essentielles à votre activité (clients, factures, projets) ?</div>
+                    <div class="question-explanation">Vous et votre équipe, savez-vous quelles sont les données absolument essentielles à votre activité (clients, factures, projets) ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q13_oui" name="q13" value="4" required>
@@ -485,7 +526,7 @@
 
                 <div class="question">
                     <div class="question-title">14. Mini plan d'urgence (1 page)</div>
-                    <div class="question-explanation">Avez-vous un document simple qui explique quoi faire en cas de panne ou de piratage ?</div>
+                    <div class="question-explanation">Avez-vous un document simple qui explique à vous et votre équipe quoi faire en cas de panne ou de piratage ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q14_oui" name="q14" value="4" required>
@@ -504,7 +545,7 @@
 
                 <div class="question">
                     <div class="question-title">15. Sauvegarde protégée contre ransomwares</div>
-                    <div class="question-explanation">Vos sauvegardes sont-elles à l'abri d'une attaque (déconnectées, en lecture seule, verrouillées) ?</div>
+                    <div class="question-explanation">Vos sauvegardes (pour vous et votre équipe) sont-elles à l'abri d'une attaque (déconnectées, en lecture seule, verrouillées) ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q15_oui" name="q15" value="4" required>
@@ -524,11 +565,11 @@
 
             <!-- PILIER 4 : Parc informatique -->
             <fieldset>
-                <legend>💻 Pilier 4 — Parc Informatique</legend>
+                <legend>Pilier 4 — Parc Informatique</legend>
 
                 <div class="question">
                     <div class="question-title">16. Liste claire des appareils</div>
-                    <div class="question-explanation">Avez-vous une liste des ordinateurs, téléphones et tablettes utilisés dans l'entreprise ?</div>
+                    <div class="question-explanation">Avez-vous une liste des ordinateurs, téléphones et tablettes utilisés par vous et votre équipe dans l'entreprise ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q16_oui" name="q16" value="4" required>
@@ -547,7 +588,7 @@
 
                 <div class="question">
                     <div class="question-title">17. Appareils personnels encadrés</div>
-                    <div class="question-explanation">Si des appareils personnels sont utilisés pour le travail, y a-t-il des règles de sécurité minimales ?</div>
+                    <div class="question-explanation">Si vous ou votre équipe utilisez des appareils personnels pour le travail, y a-t-il des règles de sécurité minimales ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q17_oui" name="q17" value="4" required>
@@ -566,7 +607,7 @@
 
                 <div class="question">
                     <div class="question-title">18. Mises à jour automatiques</div>
-                    <div class="question-explanation">Les mises à jour de sécurité de vos ordinateurs et logiciels s'installent-elles automatiquement ?</div>
+                    <div class="question-explanation">Les mises à jour de sécurité de vos ordinateurs et logiciels (pour vous et votre équipe) s'installent-elles automatiquement ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q18_oui" name="q18" value="4" required>
@@ -585,7 +626,7 @@
 
                 <div class="question">
                     <div class="question-title">19. Antivirus/EDR actif</div>
-                    <div class="question-explanation">Y a-t-il un antivirus ou une protection active sur tous vos ordinateurs ?</div>
+                    <div class="question-explanation">Y a-t-il un antivirus ou une protection active sur tous les ordinateurs de vous et votre équipe ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q19_oui" name="q19" value="4" required>
@@ -604,7 +645,7 @@
 
                 <div class="question">
                     <div class="question-title">20. Comptes administrateurs limités</div>
-                    <div class="question-explanation">Utilisez-vous un compte normal (non administrateur) pour le travail quotidien ?</div>
+                    <div class="question-explanation">Vous et votre équipe, utilisez-vous un compte normal (non administrateur) pour le travail quotidien ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q20_oui" name="q20" value="4" required>
@@ -624,11 +665,11 @@
 
             <!-- PILIER 5 : Fournisseurs & outils -->
             <fieldset>
-                <legend>🤝 Pilier 5 — Fournisseurs & Outils</legend>
+                <legend>Pilier 5 — Fournisseurs & Outils</legend>
 
                 <div class="question">
                     <div class="question-title">21. Outils critiques identifiés</div>
-                    <div class="question-explanation">Savez-vous quels sont les outils ou services essentiels dont dépend votre activité (logiciel de facturation, CRM, etc.) ?</div>
+                    <div class="question-explanation">Vous et votre équipe, savez-vous quels sont les outils ou services essentiels dont dépend votre activité (logiciel de facturation, CRM, etc.) ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q21_oui" name="q21" value="4" required>
@@ -647,7 +688,7 @@
 
                 <div class="question">
                     <div class="question-title">22. Vérification minimale des fournisseurs</div>
-                    <div class="question-explanation">Avant d'utiliser un nouvel outil ou service, vérifiez-vous un minimum sa fiabilité et sa sécurité ?</div>
+                    <div class="question-explanation">Avant d'utiliser un nouvel outil ou service, vous et votre équipe, vérifiez-vous un minimum sa fiabilité et sa sécurité ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q22_oui" name="q22" value="4" required>
@@ -666,7 +707,7 @@
 
                 <div class="question">
                     <div class="question-title">23. Nettoyage annuel des accès/outils</div>
-                    <div class="question-explanation">Faites-vous le ménage dans les outils et accès que vous n'utilisez plus au moins une fois par an ?</div>
+                    <div class="question-explanation">Vous et votre équipe, faites-vous le ménage dans les outils et accès que vous n'utilisez plus au moins une fois par an ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q23_oui" name="q23" value="4" required>
@@ -685,7 +726,7 @@
 
                 <div class="question">
                     <div class="question-title">24. Transferts de fichiers encadrés</div>
-                    <div class="question-explanation">Utilisez-vous des moyens sécurisés pour échanger des fichiers sensibles (plateformes sécurisées, pas de clés USB inconnues) ?</div>
+                    <div class="question-explanation">Vous et votre équipe, utilisez-vous des moyens sécurisés pour échanger des fichiers sensibles (plateformes sécurisées, pas de clés USB inconnues) ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q24_oui" name="q24" value="4" required>
@@ -704,7 +745,7 @@
 
                 <div class="question">
                     <div class="question-title">25. Suppression des outils obsolètes</div>
-                    <div class="question-explanation">Supprimez-vous les anciens logiciels ou services que vous n'utilisez plus ?</div>
+                    <div class="question-explanation">Vous et votre équipe, supprimez-vous les anciens logiciels ou services que vous n'utilisez plus ?</div>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="q25_oui" name="q25" value="4" required>
@@ -723,8 +764,8 @@
             </fieldset>
 
             <div class="buttons-container">
-                <button type="button" class="btn-calculate" onclick="calculateScore()">🎯 Calculer mon CyberScore</button>
-                <button type="button" class="btn-reset" onclick="resetForm()">🔄 Réinitialiser</button>
+                <button type="button" class="btn-calculate" onclick="calculateScore()">Calculer mon CyberScore</button>
+                <button type="button" class="btn-reset" onclick="resetForm()">Réinitialiser</button>
             </div>
         </form>
 
@@ -732,6 +773,17 @@
             <div class="score-letter" id="scoreLetter"></div>
             <div class="score-details" id="scoreDetails"></div>
             <div class="score-interpretation" id="scoreInterpretation"></div>
+            <div class="score-scale">
+                <h3>Échelle d'évaluation</h3>
+                <div class="scale-items">
+                    <div class="scale-item scale-A">A : 86-100 pts</div>
+                    <div class="scale-item scale-B">B : 71-85 pts</div>
+                    <div class="scale-item scale-C">C : 51-70 pts</div>
+                    <div class="scale-item scale-D">D : 31-50 pts</div>
+                    <div class="scale-item scale-E">E : 16-30 pts</div>
+                    <div class="scale-item scale-F">F : 0-15 pts</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -739,8 +791,12 @@
         function calculateScore() {
             const form = document.getElementById('cyberscoreForm');
 
+            // Retirer toutes les marques "unanswered" existantes
+            document.querySelectorAll('.question').forEach(q => q.classList.remove('unanswered'));
+
             // Vérifier que toutes les questions ont une réponse
             let allAnswered = true;
+            let firstUnanswered = null;
             for (let i = 1; i <= 25; i++) {
                 const radioGroup = form.elements['q' + i];
                 let answered = false;
@@ -752,12 +808,21 @@
                 }
                 if (!answered) {
                     allAnswered = false;
-                    break;
+                    // Marquer visuellement la question non répondue
+                    const questionDiv = radioGroup[0].closest('.question');
+                    questionDiv.classList.add('unanswered');
+                    if (!firstUnanswered) {
+                        firstUnanswered = questionDiv;
+                    }
                 }
             }
 
             if (!allAnswered) {
-                alert('⚠️ Veuillez répondre à toutes les questions avant de calculer votre score.');
+                alert('Veuillez répondre à toutes les questions avant de calculer votre score. Les questions manquantes sont marquées en rouge.');
+                // Défiler vers la première question non répondue
+                if (firstUnanswered) {
+                    firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
                 return;
             }
 
@@ -779,27 +844,27 @@
             if (totalScore >= 86) {
                 letter = 'A';
                 gradeClass = 'grade-A';
-                interpretation = '🎉 Excellent ! Votre niveau de sécurité est exemplaire. Continuez ces bonnes pratiques et restez vigilant.';
+                interpretation = 'Excellent ! Votre niveau de sécurité est exemplaire. Continuez ces bonnes pratiques et restez vigilant.';
             } else if (totalScore >= 71) {
                 letter = 'B';
                 gradeClass = 'grade-B';
-                interpretation = '👍 Bon niveau ! Vous avez de solides bases en sécurité. Quelques améliorations permettraient d\'atteindre l\'excellence.';
+                interpretation = 'Bon niveau ! Vous avez de solides bases en sécurité. Quelques améliorations permettraient d\'atteindre l\'excellence.';
             } else if (totalScore >= 51) {
                 letter = 'C';
                 gradeClass = 'grade-C';
-                interpretation = '⚠️ Correct, mais améliorable. Votre sécurité de base est présente, mais des efforts sont nécessaires pour mieux vous protéger.';
+                interpretation = 'Correct, mais améliorable. Votre sécurité de base est présente, mais des efforts sont nécessaires pour mieux vous protéger.';
             } else if (totalScore >= 31) {
                 letter = 'D';
                 gradeClass = 'grade-D';
-                interpretation = '😟 Insuffisant. Votre niveau de sécurité présente des failles importantes. Des actions prioritaires sont nécessaires rapidement.';
+                interpretation = 'Insuffisant. Votre niveau de sécurité présente des failles importantes. Des actions prioritaires sont nécessaires rapidement.';
             } else if (totalScore >= 16) {
                 letter = 'E';
                 gradeClass = 'grade-E';
-                interpretation = '🚨 Très insuffisant. Votre entreprise est vulnérable. Il est urgent d\'améliorer votre sécurité informatique.';
+                interpretation = 'Très insuffisant. Votre entreprise est vulnérable. Il est urgent d\'améliorer votre sécurité informatique.';
             } else {
                 letter = 'F';
                 gradeClass = 'grade-F';
-                interpretation = '⛔ Critique ! Votre situation est très dangereuse. Contactez immédiatement un professionnel pour sécuriser votre activité.';
+                interpretation = 'Critique ! Votre situation est très dangereuse. Contactez immédiatement un professionnel pour sécuriser votre activité.';
             }
 
             // Afficher le résultat
