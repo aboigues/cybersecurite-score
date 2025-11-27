@@ -356,6 +356,109 @@
             margin: 0;
         }
 
+        .cyber-impact-section {
+            margin-top: 25px;
+            padding: 25px;
+            background: #fff5f5;
+            border-left: 4px solid #e53e3e;
+            border-radius: 10px;
+        }
+
+        .cyber-impact-section h3 {
+            color: #c53030;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .cyber-impact-section .intro-text {
+            color: #2d3748;
+            margin-bottom: 25px;
+            font-size: 1.05em;
+            line-height: 1.6;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .impact-stat {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #e53e3e;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .impact-stat-number {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #e53e3e;
+            margin-bottom: 8px;
+        }
+
+        .impact-stat-label {
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1em;
+        }
+
+        .impact-stat-desc {
+            color: #4a5568;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .impact-conclusion {
+            background: linear-gradient(135deg, #c53030 0%, #e53e3e 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.1em;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .impact-sources {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #fed7d7;
+            font-size: 0.85em;
+            color: #4a5568;
+        }
+
+        .impact-sources h4 {
+            font-size: 0.9em;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .impact-sources ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .impact-sources li {
+            margin-bottom: 5px;
+        }
+
+        .impact-sources a {
+            color: #3182ce;
+            text-decoration: none;
+        }
+
+        .impact-sources a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -887,6 +990,63 @@
                 </a>
             </div>
 
+            <!-- Section d'impact cyber pour scores faibles -->
+            <div class="cyber-impact-section" id="cyberImpactSection" style="display: none;">
+                <h3>Pourquoi il est urgent d'agir : la réalité des cyberattaques sur les TPE-PME</h3>
+                <p class="intro-text">Les chiffres parlent d'eux-mêmes. Les cyberattaques ne sont plus une menace lointaine, elles touchent massivement les TPE-PME françaises avec des conséquences dramatiques :</p>
+
+                <div class="impact-stats">
+                    <div class="impact-stat">
+                        <div class="impact-stat-number">60%</div>
+                        <div class="impact-stat-label">Fermeture définitive</div>
+                        <div class="impact-stat-desc">des PME victimes d'une attaque majeure ferment leurs portes dans les 18 mois</div>
+                    </div>
+
+                    <div class="impact-stat">
+                        <div class="impact-stat-number">67%</div>
+                        <div class="impact-stat-label">Entreprises touchées</div>
+                        <div class="impact-stat-desc">des entreprises françaises ont subi au moins une cyberattaque en 2024</div>
+                    </div>
+
+                    <div class="impact-stat">
+                        <div class="impact-stat-number">27%</div>
+                        <div class="impact-stat-label">Perte de résultat</div>
+                        <div class="impact-stat-desc">du résultat annuel perdu en moyenne pendant la restauration du système informatique</div>
+                    </div>
+
+                    <div class="impact-stat">
+                        <div class="impact-stat-number">26 jours</div>
+                        <div class="impact-stat-label">Arrêt d'activité</div>
+                        <div class="impact-stat-desc">en moyenne pour qu'une TPE retrouve un niveau d'activité normal après une attaque</div>
+                    </div>
+
+                    <div class="impact-stat">
+                        <div class="impact-stat-number">14 720€</div>
+                        <div class="impact-stat-label">Coût moyen</div>
+                        <div class="impact-stat-desc">d'une cyberattaque pour une entreprise, mais 1 entreprise sur 8 subit des coûts dépassant 230 000€</div>
+                    </div>
+
+                    <div class="impact-stat">
+                        <div class="impact-stat-number">70%</div>
+                        <div class="impact-stat-label">TPE ciblées</div>
+                        <div class="impact-stat-desc">des cyberattaques ciblent directement les TPE, souvent perçues comme des cibles faciles</div>
+                    </div>
+                </div>
+
+                <div class="impact-conclusion">
+                    Ne laissez pas votre entreprise devenir une statistique. Chaque jour sans protection adéquate est un jour de risque. Les actions recommandées ci-dessus peuvent faire la différence entre la continuité et la fermeture de votre activité.
+                </div>
+
+                <div class="impact-sources">
+                    <h4>Sources :</h4>
+                    <ul>
+                        <li><a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/actualites/etude-maturite-cyber-tpe-pme-2025" target="_blank">Cybermalveillance.gouv.fr - Baromètre national TPE-PME 2025</a></li>
+                        <li><a href="https://securigeek.com/cyberattaques-tpe-pme-un-enjeu-vital-pour-2024-2025/" target="_blank">Securigeek - Cyberattaques TPE/PME : un enjeu vital 2024-2025</a></li>
+                        <li><a href="https://siecledigital.fr/2024/10/02/cybersecurite-tpe-pme-les-derniers-chiffres-montrent-un-besoin-urgent-de-sensibilisation-et-dinvestissement/" target="_blank">Siècle Digital - Cybersécurité TPE-PME : les derniers chiffres</a></li>
+                    </ul>
+                </div>
+            </div>
+
             <!-- Rappel dimension humaine -->
             <div class="human-dimension-reminder">
                 <h4>Ne perdez pas de vue l'essentiel</h4>
@@ -985,12 +1145,15 @@
             // Générer les actions recommandées
             generateActions(form, totalScore);
 
-            // Afficher l'accompagnement si score faible (D, E, F)
+            // Afficher l'accompagnement et la section d'impact si score faible (D, E, F)
             const accompanimentSection = document.getElementById('accompanimentSection');
+            const cyberImpactSection = document.getElementById('cyberImpactSection');
             if (totalScore < 51) {
                 accompanimentSection.style.display = 'block';
+                cyberImpactSection.style.display = 'block';
             } else {
                 accompanimentSection.style.display = 'none';
+                cyberImpactSection.style.display = 'none';
             }
 
             // Scroll vers le résultat
