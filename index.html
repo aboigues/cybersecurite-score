@@ -521,6 +521,25 @@
             <p><strong>Confidentialité totale :</strong> Vos réponses restent strictement sur votre ordinateur. Rien n'est transmis ni sauvegardé.</p>
         </div>
 
+        <div class="participant-info">
+            <fieldset style="background: white; margin-bottom: 30px;">
+                <legend>Informations du participant (optionnel)</legend>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <label for="participantFirstName" style="display: block; margin-bottom: 5px; font-weight: 600; color: #2d3748;">Prénom :</label>
+                        <input type="text" id="participantFirstName" placeholder="Ex: Alexandre" style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 5px; font-size: 1em;">
+                    </div>
+                    <div>
+                        <label for="participantLastName" style="display: block; margin-bottom: 5px; font-weight: 600; color: #2d3748;">Nom :</label>
+                        <input type="text" id="participantLastName" placeholder="Ex: Boigues" style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 5px; font-size: 1em;">
+                    </div>
+                </div>
+                <div id="participantDisplayName" style="padding: 10px; background: #f7fafc; border-radius: 5px; color: #4a5568; font-style: italic; min-height: 20px;">
+                    Le nom affiché sera au format : Prénom + 2 lettres du nom (ex: Alexandre BO)
+                </div>
+            </fieldset>
+        </div>
+
         <form id="cyberscoreForm">
             <!-- PILIER 1 : Gouvernance & comportements -->
             <fieldset>
@@ -981,8 +1000,22 @@
             <div class="buttons-container">
                 <button type="button" class="btn-calculate" onclick="calculateScore()">Calculer mon CyberScore</button>
                 <button type="button" class="btn-reset" onclick="resetForm()">Réinitialiser</button>
+                <button type="button" class="btn-participants" onclick="toggleParticipantsPanel()" style="background: #38b2ac; color: white;">Voir tous les participants</button>
             </div>
         </form>
+
+        <!-- Panneau de gestion des participants -->
+        <div id="participantsPanel" style="display: none; margin-top: 30px; padding: 30px; background: white; border-radius: 15px; border: 3px solid #38b2ac;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #2d3748; margin: 0;">Liste des participants</h2>
+                <button onclick="toggleParticipantsPanel()" style="background: #cbd5e0; color: #2d3748; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Fermer</button>
+            </div>
+            <div id="participantsList"></div>
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #e2e8f0; display: flex; gap: 10px; justify-content: center;">
+                <button onclick="exportParticipantsCSV()" style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Exporter en CSV</button>
+                <button onclick="clearAllParticipants()" style="background: #e53e3e; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Supprimer tous les participants</button>
+            </div>
+        </div>
 
         <div id="result">
             <div class="score-letter" id="scoreLetter"></div>
@@ -1086,6 +1119,45 @@
     </div>
 
     <script>
+        // Fonction pour formater le nom du participant (Prénom + 2 lettres du nom)
+        function formatParticipantName(firstName, lastName) {
+            if (!firstName && !lastName) return '';
+
+            const formattedFirstName = firstName.trim();
+            const formattedLastName = lastName.trim().substring(0, 2).toUpperCase();
+
+            if (formattedFirstName && formattedLastName) {
+                return `${formattedFirstName} ${formattedLastName}`;
+            } else if (formattedFirstName) {
+                return formattedFirstName;
+            }
+            return '';
+        }
+
+        // Mettre à jour l'affichage du nom formaté en temps réel
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstNameInput = document.getElementById('participantFirstName');
+            const lastNameInput = document.getElementById('participantLastName');
+            const displayNameDiv = document.getElementById('participantDisplayName');
+
+            function updateDisplayName() {
+                const firstName = firstNameInput.value;
+                const lastName = lastNameInput.value;
+                const formattedName = formatParticipantName(firstName, lastName);
+
+                if (formattedName) {
+                    displayNameDiv.innerHTML = `<strong>Nom qui sera enregistré :</strong> ${formattedName}`;
+                    displayNameDiv.style.color = '#2d3748';
+                } else {
+                    displayNameDiv.innerHTML = 'Le nom affiché sera au format : Prénom + 2 lettres du nom (ex: Alexandre BO)';
+                    displayNameDiv.style.color = '#4a5568';
+                }
+            }
+
+            firstNameInput.addEventListener('input', updateDisplayName);
+            lastNameInput.addEventListener('input', updateDisplayName);
+        });
+
         function calculateScore() {
             const form = document.getElementById('cyberscoreForm');
 
@@ -1186,8 +1258,168 @@
                 cyberImpactSection.style.display = 'none';
             }
 
+            // Sauvegarder les résultats dans localStorage
+            saveParticipantResult(form, totalScore, letter);
+
             // Scroll vers le résultat
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Fonction pour sauvegarder les résultats d'un participant
+        function saveParticipantResult(form, totalScore, letter) {
+            const firstName = document.getElementById('participantFirstName').value;
+            const lastName = document.getElementById('participantLastName').value;
+            const participantName = formatParticipantName(firstName, lastName);
+
+            // Si aucun nom n'est saisi, ne pas sauvegarder
+            if (!participantName) {
+                return;
+            }
+
+            // Récupérer les réponses du participant
+            const answers = {};
+            for (let i = 1; i <= 25; i++) {
+                const radioGroup = form.elements['q' + i];
+                for (let j = 0; j < radioGroup.length; j++) {
+                    if (radioGroup[j].checked) {
+                        answers['q' + i] = parseInt(radioGroup[j].value);
+                        break;
+                    }
+                }
+            }
+
+            // Créer l'objet de résultat
+            const result = {
+                name: participantName,
+                score: totalScore,
+                grade: letter,
+                answers: answers,
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleString('fr-FR')
+            };
+
+            // Récupérer tous les participants existants
+            const allParticipants = JSON.parse(localStorage.getItem('cyberscoreParticipants') || '{}');
+
+            // Ajouter ou mettre à jour ce participant
+            allParticipants[participantName] = result;
+
+            // Sauvegarder dans localStorage
+            localStorage.setItem('cyberscoreParticipants', JSON.stringify(allParticipants));
+
+            console.log('Résultat sauvegardé pour:', participantName);
+        }
+
+        // Fonction pour afficher/masquer le panneau des participants
+        function toggleParticipantsPanel() {
+            const panel = document.getElementById('participantsPanel');
+            if (panel.style.display === 'none' || panel.style.display === '') {
+                panel.style.display = 'block';
+                loadParticipantsList();
+                panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                panel.style.display = 'none';
+            }
+        }
+
+        // Fonction pour charger et afficher la liste des participants
+        function loadParticipantsList() {
+            const participantsList = document.getElementById('participantsList');
+            const allParticipants = JSON.parse(localStorage.getItem('cyberscoreParticipants') || '{}');
+
+            if (Object.keys(allParticipants).length === 0) {
+                participantsList.innerHTML = '<p style="text-align: center; color: #718096; padding: 40px;">Aucun participant enregistré pour le moment.</p>';
+                return;
+            }
+
+            // Convertir en tableau et trier par score décroissant
+            const participantsArray = Object.values(allParticipants).sort((a, b) => b.score - a.score);
+
+            let html = '<div style="overflow-x: auto;"><table style="width: 100%; border-collapse: collapse;">';
+            html += '<thead><tr style="background: #f7fafc; border-bottom: 2px solid #e2e8f0;">';
+            html += '<th style="padding: 12px; text-align: left; color: #2d3748; font-weight: 600;">Participant</th>';
+            html += '<th style="padding: 12px; text-align: center; color: #2d3748; font-weight: 600;">Score</th>';
+            html += '<th style="padding: 12px; text-align: center; color: #2d3748; font-weight: 600;">Note</th>';
+            html += '<th style="padding: 12px; text-align: center; color: #2d3748; font-weight: 600;">Date</th>';
+            html += '<th style="padding: 12px; text-align: center; color: #2d3748; font-weight: 600;">Actions</th>';
+            html += '</tr></thead><tbody>';
+
+            participantsArray.forEach(participant => {
+                const gradeClass = `grade-${participant.grade}`;
+                html += '<tr style="border-bottom: 1px solid #e2e8f0;">';
+                html += `<td style="padding: 12px; font-weight: 600; color: #2d3748;">${participant.name}</td>`;
+                html += `<td style="padding: 12px; text-align: center; font-weight: 600;">${participant.score}/100</td>`;
+                html += `<td style="padding: 12px; text-align: center;"><span style="display: inline-block; padding: 5px 15px; border-radius: 20px; color: white; font-weight: bold;" class="${gradeClass}">${participant.grade}</span></td>`;
+                html += `<td style="padding: 12px; text-align: center; color: #4a5568; font-size: 0.9em;">${participant.date}</td>`;
+                html += `<td style="padding: 12px; text-align: center;"><button onclick="deleteParticipant('${participant.name}')" style="background: #e53e3e; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9em;">Supprimer</button></td>`;
+                html += '</tr>';
+            });
+
+            html += '</tbody></table></div>';
+
+            // Ajouter des statistiques
+            const avgScore = participantsArray.reduce((sum, p) => sum + p.score, 0) / participantsArray.length;
+            html += '<div style="margin-top: 20px; padding: 15px; background: #f7fafc; border-radius: 8px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">';
+            html += `<div style="text-align: center;"><div style="font-size: 2em; font-weight: bold; color: #667eea;">${participantsArray.length}</div><div style="color: #4a5568; font-size: 0.9em;">Participants</div></div>`;
+            html += `<div style="text-align: center;"><div style="font-size: 2em; font-weight: bold; color: #667eea;">${avgScore.toFixed(1)}</div><div style="color: #4a5568; font-size: 0.9em;">Score moyen</div></div>`;
+            const bestScore = Math.max(...participantsArray.map(p => p.score));
+            html += `<div style="text-align: center;"><div style="font-size: 2em; font-weight: bold; color: #38b2ac;">${bestScore}</div><div style="color: #4a5568; font-size: 0.9em;">Meilleur score</div></div>`;
+            html += '</div>';
+
+            participantsList.innerHTML = html;
+        }
+
+        // Fonction pour supprimer un participant
+        function deleteParticipant(name) {
+            if (!confirm(`Êtes-vous sûr de vouloir supprimer ${name} ?`)) {
+                return;
+            }
+
+            const allParticipants = JSON.parse(localStorage.getItem('cyberscoreParticipants') || '{}');
+            delete allParticipants[name];
+            localStorage.setItem('cyberscoreParticipants', JSON.stringify(allParticipants));
+
+            loadParticipantsList();
+        }
+
+        // Fonction pour supprimer tous les participants
+        function clearAllParticipants() {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer TOUS les participants ? Cette action est irréversible.')) {
+                return;
+            }
+
+            localStorage.removeItem('cyberscoreParticipants');
+            loadParticipantsList();
+            alert('Tous les participants ont été supprimés.');
+        }
+
+        // Fonction pour exporter les résultats en CSV
+        function exportParticipantsCSV() {
+            const allParticipants = JSON.parse(localStorage.getItem('cyberscoreParticipants') || '{}');
+
+            if (Object.keys(allParticipants).length === 0) {
+                alert('Aucun participant à exporter.');
+                return;
+            }
+
+            const participantsArray = Object.values(allParticipants).sort((a, b) => b.score - a.score);
+
+            // Créer le CSV
+            let csv = 'Participant,Score,Note,Date\n';
+            participantsArray.forEach(participant => {
+                csv += `"${participant.name}",${participant.score},${participant.grade},"${participant.date}"\n`;
+            });
+
+            // Télécharger le fichier
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `cyberscore-participants-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function generateActions(form, totalScore) {
