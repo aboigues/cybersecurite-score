@@ -1,0 +1,6 @@
+# robots.txt pour CyberScore TPE-PME
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://aboigues.github.io/cybersecurite-score/sitemap.xml

@@ -3,7 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberScore TPE-PME</title>
+    <title>CyberScore TPE-PME - Évaluez la Sécurité Informatique de votre Entreprise</title>
+
+    <!-- Meta Description -->
+    <meta name="description" content="Outil gratuit d'évaluation de la cybersécurité pour TPE et PME. Testez votre niveau de sécurité informatique en 10 minutes et obtenez des recommandations personnalisées pour protéger votre entreprise.">
+    <meta name="keywords" content="cybersécurité, TPE, PME, sécurité informatique, cyberattaque, protection données, audit sécurité, cyberscore, ransomware, phishing">
+    <meta name="author" content="Alexandre Boigues">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aboigues.github.io/cybersecurite-score/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aboigues.github.io/cybersecurite-score/">
+    <meta property="og:title" content="CyberScore TPE-PME - Évaluez la Sécurité Informatique de votre Entreprise">
+    <meta property="og:description" content="Outil gratuit d'évaluation de la cybersécurité pour TPE et PME. Testez votre niveau de sécurité en 10 minutes et obtenez des recommandations personnalisées.">
+    <meta property="og:image" content="https://aboigues.github.io/cybersecurite-score/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="CyberScore TPE-PME - Outil d'évaluation de la cybersécurité">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="CyberScore TPE-PME">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://aboigues.github.io/cybersecurite-score/">
+    <meta name="twitter:title" content="CyberScore TPE-PME - Évaluez la Sécurité Informatique de votre Entreprise">
+    <meta name="twitter:description" content="Outil gratuit d'évaluation de la cybersécurité pour TPE et PME. Testez votre niveau de sécurité en 10 minutes.">
+    <meta name="twitter:image" content="https://aboigues.github.io/cybersecurite-score/og-image.png">
+    <meta name="twitter:image:alt" content="CyberScore TPE-PME - Outil d'évaluation de la cybersécurité">
+    <meta name="twitter:creator" content="@AlexandreBoigues">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "CyberScore TPE-PME",
+        "applicationCategory": "SecurityApplication",
+        "description": "Outil gratuit d'évaluation de la cybersécurité pour TPE et PME. Testez votre niveau de sécurité informatique en 10 minutes et obtenez des recommandations personnalisées pour protéger votre entreprise.",
+        "url": "https://aboigues.github.io/cybersecurite-score/",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Alexandre Boigues",
+            "url": "https://www.linkedin.com/in/alexandre-boigues/"
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Alexandre Boigues"
+        },
+        "inLanguage": "fr-FR",
+        "keywords": "cybersécurité, TPE, PME, sécurité informatique, cyberattaque, protection données, audit sécurité, cyberscore, ransomware, phishing",
+        "audience": {
+            "@type": "Audience",
+            "audienceType": "TPE, PME, Petites et Moyennes Entreprises"
+        },
+        "featureList": [
+            "Évaluation de la cybersécurité en 25 questions",
+            "Score personnalisé de A à F",
+            "Recommandations prioritaires adaptées",
+            "Analyse sur 5 piliers de sécurité",
+            "Outil 100% gratuit et confidentiel"
+        ]
+    }
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -62,7 +131,7 @@
             background: #f7fafc;
         }
 
-        legend {
+        legend, fieldset h2 {
             font-size: 1.4em;
             font-weight: bold;
             color: #2d3748;
@@ -524,7 +593,7 @@
         <form id="cyberscoreForm">
             <!-- PILIER 1 : Gouvernance & comportements -->
             <fieldset>
-                <legend>Pilier 1 — Gouvernance & Comportements</legend>
+                <h2>Pilier 1 — Gouvernance & Comportements</h2>
 
                 <div class="question">
                     <div class="question-title">1. Reconnaître un message suspect</div>
@@ -620,7 +689,7 @@
 
             <!-- PILIER 2 : Accès & identités -->
             <fieldset>
-                <legend>Pilier 2 — Accès & Identités</legend>
+                <h2>Pilier 2 — Accès & Identités</h2>
 
                 <div class="question">
                     <div class="question-title">6. Sécurité renforcée sur comptes importants</div>
@@ -708,7 +777,7 @@
 
             <!-- PILIER 3 : Sauvegardes & continuité -->
             <fieldset>
-                <legend>Pilier 3 — Sauvegardes & Continuité</legend>
+                <h2>Pilier 3 — Sauvegardes & Continuité</h2>
 
                 <div class="question">
                     <div class="question-title">11. Sauvegarde séparée</div>
@@ -800,7 +869,7 @@
 
             <!-- PILIER 4 : Parc informatique -->
             <fieldset>
-                <legend>Pilier 4 — Parc Informatique</legend>
+                <h2>Pilier 4 — Parc Informatique</h2>
 
                 <div class="question">
                     <div class="question-title">16. Liste claire des appareils</div>
@@ -888,7 +957,7 @@
 
             <!-- PILIER 5 : Fournisseurs & outils -->
             <fieldset>
-                <legend>Pilier 5 — Fournisseurs & Outils</legend>
+                <h2>Pilier 5 — Fournisseurs & Outils</h2>
 
                 <div class="question">
                     <div class="question-title">21. Outils critiques identifiés</div>
