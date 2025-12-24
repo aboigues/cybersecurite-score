@@ -102,6 +102,20 @@
             color: #764ba2;
         }
 
+        .back-link:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        a {
+            color: #5568d3;
+        }
+
+        a:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
         .highlight {
             background: #e6fffa;
             border-left: 4px solid #38b2ac;
@@ -120,7 +134,7 @@
             padding-top: 20px;
             border-top: 2px solid #e2e8f0;
             text-align: center;
-            color: #718096;
+            color: #4a5568;
             font-size: 0.9em;
         }
 
@@ -137,19 +151,25 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-link">← Retour au CyberScore</a>
+        <nav aria-label="Navigation de retour">
+            <a href="index.html" class="back-link" aria-label="Retourner à la page d'accueil CyberScore">← Retour au CyberScore</a>
+        </nav>
 
-        <h1>Mentions Légales</h1>
+        <main>
+            <h1>Mentions Légales</h1>
 
-        <h2>Éditeur du site</h2>
+            <section aria-label="Informations sur l'éditeur">
+                <h2>Éditeur du site</h2>
         <p>
             Le site CyberScore TPE-PME est édité par :<br>
             <strong>Alexandre Boigues</strong><br>
             Expert en cybersécurité<br>
-            Contact : <a href="https://www.linkedin.com/in/alexandre-boigues/" target="_blank">LinkedIn</a>
+            Contact : <a href="https://www.linkedin.com/in/alexandre-boigues/" target="_blank" aria-label="Profil LinkedIn d'Alexandre Boigues (ouverture dans un nouvel onglet)">LinkedIn</a>
         </p>
+            </section>
 
-        <h2>Hébergement</h2>
+            <section aria-label="Informations sur l'hébergement">
+                <h2>Hébergement</h2>
         <p>
             Ce site est hébergé par :<br>
             <strong>GitHub, Inc.</strong><br>
@@ -158,17 +178,21 @@
             États-Unis<br>
             <br>
             Service : GitHub Pages (pages.github.com)<br>
-            Site web : <a href="https://github.com" target="_blank">github.com</a><br>
+            Site web : <a href="https://github.com" target="_blank" aria-label="Site web de GitHub (ouverture dans un nouvel onglet)">github.com</a><br>
             <br>
             GitHub Pages est un service d'hébergement de sites web statiques fourni gratuitement par GitHub, Inc., une filiale de Microsoft Corporation. Le site est accessible via le domaine github.io.
         </p>
+            </section>
 
-        <h2>Propriété intellectuelle</h2>
+            <section aria-label="Propriété intellectuelle">
+                <h2>Propriété intellectuelle</h2>
         <p>
             L'ensemble du contenu de ce site (textes, questionnaires, algorithmes de calcul, design) est la propriété d'Alexandre Boigues. Toute reproduction, distribution, modification, adaptation, retransmission ou publication de ces différents éléments est strictement interdite sans l'accord écrit préalable d'Alexandre Boigues.
         </p>
+            </section>
 
-        <h2>Protection des données personnelles</h2>
+            <section aria-label="Protection des données personnelles">
+                <h2>Protection des données personnelles</h2>
         <div class="highlight">
             <p><strong>Aucune donnée personnelle n'est collectée par ce site.</strong></p>
         </div>
@@ -178,8 +202,10 @@
         <p>
             Le site ne dépose aucun cookie et n'utilise aucun outil de tracking ou d'analyse d'audience.
         </p>
+            </section>
 
-        <h2>Responsabilité</h2>
+            <section aria-label="Responsabilité et limitations">
+                <h2>Responsabilité</h2>
         <p>
             Les informations fournies sur ce site le sont à titre indicatif. Le CyberScore est un outil d'auto-évaluation destiné à sensibiliser les TPE-PME aux enjeux de cybersécurité. Il ne constitue en aucun cas :
         </p>
@@ -194,24 +220,32 @@
         <p>
             Pour une évaluation complète et des conseils adaptés à votre situation spécifique, il est recommandé de faire appel à un professionnel de la cybersécurité.
         </p>
+            </section>
 
-        <h2>Liens externes</h2>
+            <section aria-label="Liens externes">
+                <h2>Liens externes</h2>
         <p>
             Ce site peut contenir des liens vers des sites externes. L'éditeur n'a aucun contrôle sur le contenu de ces sites et décline toute responsabilité quant à leur contenu.
         </p>
+            </section>
 
-        <h2>Crédits</h2>
+            <section aria-label="Crédits">
+                <h2>Crédits</h2>
         <p>
             Conception et développement : Alexandre Boigues<br>
             Les statistiques et données citées proviennent de sources officielles (Cybermalveillance.gouv.fr, études sectorielles) dont les références sont indiquées dans l'outil.
         </p>
+            </section>
 
-        <h2>Contact</h2>
+            <section aria-label="Contact">
+                <h2>Contact</h2>
         <p>
-            Pour toute question concernant ces mentions légales ou le fonctionnement du site, vous pouvez contacter Alexandre Boigues via son profil <a href="https://www.linkedin.com/in/alexandre-boigues/" target="_blank">LinkedIn</a>.
+            Pour toute question concernant ces mentions légales ou le fonctionnement du site, vous pouvez contacter Alexandre Boigues via son profil <a href="https://www.linkedin.com/in/alexandre-boigues/" target="_blank" aria-label="Profil LinkedIn d'Alexandre Boigues (ouverture dans un nouvel onglet)">LinkedIn</a>.
         </p>
+            </section>
+        </main>
 
-        <footer>
+        <footer role="contentinfo">
             <p>CyberScore TPE-PME - Outil de sensibilisation à la cybersécurité</p>
             <p>© 2025 Alexandre Boigues - Tous droits réservés</p>
         </footer>

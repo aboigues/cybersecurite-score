@@ -105,7 +105,7 @@
 
         .subtitle {
             text-align: center;
-            color: #718096;
+            color: #4a5568;
             margin-bottom: 30px;
             font-size: 1.1em;
         }
@@ -184,6 +184,11 @@
             cursor: pointer;
         }
 
+        .radio-option input[type="radio"]:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
         .radio-option label {
             cursor: pointer;
             font-size: 1em;
@@ -211,6 +216,11 @@
         button:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        button:focus {
+            outline: 3px solid #2d3748;
+            outline-offset: 2px;
         }
 
         .btn-calculate {
@@ -405,6 +415,11 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
+        .accompaniment-section .btn-linkedin:focus {
+            outline: 3px solid #fff;
+            outline-offset: 2px;
+        }
+
         .human-dimension-reminder {
             margin-top: 25px;
             padding: 20px;
@@ -542,8 +557,8 @@
         }
 
         footer a {
-            color: #667eea;
-            text-decoration: none;
+            color: #5568d3;
+            text-decoration: underline;
             font-weight: 500;
             transition: color 0.3s;
         }
@@ -551,6 +566,11 @@
         footer a:hover {
             color: #764ba2;
             text-decoration: underline;
+        }
+
+        footer a:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
         }
 
         @media (max-width: 768px) {
@@ -583,32 +603,38 @@
 </head>
 <body>
     <div class="container">
-        <h1>CyberScore TPE-PME</h1>
-        <p class="subtitle">Un outil simple pour évaluer le niveau de sécurité de votre TPE/PME - Durée estimée : 10 minutes</p>
+        <main>
+            <header>
+                <h1>CyberScore TPE-PME</h1>
+                <p class="subtitle">Un outil simple pour évaluer le niveau de sécurité de votre TPE/PME - Durée estimée : 10 minutes</p>
+            </header>
 
-        <div class="privacy-notice">
-            <p><strong>Confidentialité totale :</strong> Vos réponses restent strictement sur votre ordinateur. Rien n'est transmis ni sauvegardé.</p>
-        </div>
+            <section aria-label="Notice de confidentialité">
+                <div class="privacy-notice">
+                    <p><strong>Confidentialité totale :</strong> Vos réponses restent strictement sur votre ordinateur. Rien n'est transmis ni sauvegardé.</p>
+                </div>
+            </section>
 
-        <form id="cyberscoreForm">
+            <section aria-label="Questionnaire d'évaluation">
+                <form id="cyberscoreForm" aria-label="Formulaire d'évaluation de cybersécurité">
             <!-- PILIER 1 : Gouvernance & comportements -->
-            <fieldset>
-                <h2>Pilier 1 — Gouvernance & Comportements</h2>
+            <fieldset aria-labelledby="pillar1-title">
+                <h2 id="pillar1-title">Pilier 1 — Gouvernance & Comportements</h2>
 
                 <div class="question">
-                    <div class="question-title">1. Reconnaître un message suspect</div>
+                    <div class="question-title" id="q1-title">1. Reconnaître un message suspect</div>
                     <div class="question-explanation">Vous et votre équipe, savez-vous identifier un e-mail ou SMS frauduleux (fautes, expéditeur étrange, lien bizarre) ?</div>
-                    <div class="radio-group">
+                    <div class="radio-group" role="radiogroup" aria-labelledby="q1-title">
                         <div class="radio-option">
-                            <input type="radio" id="q1_oui" name="q1" value="4" required>
+                            <input type="radio" id="q1_oui" name="q1" value="4" required aria-label="Oui, nous savons reconnaître un message suspect">
                             <label for="q1_oui">Oui</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="q1_partie" name="q1" value="2">
+                            <input type="radio" id="q1_partie" name="q1" value="2" aria-label="En partie, nous savons reconnaître un message suspect">
                             <label for="q1_partie">En partie</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="q1_non" name="q1" value="0">
+                            <input type="radio" id="q1_non" name="q1" value="0" aria-label="Non, nous ne savons pas reconnaître un message suspect">
                             <label for="q1_non">Non</label>
                         </div>
                     </div>
@@ -688,8 +714,8 @@
             </fieldset>
 
             <!-- PILIER 2 : Accès & identités -->
-            <fieldset>
-                <h2>Pilier 2 — Accès & Identités</h2>
+            <fieldset aria-labelledby="pillar2-title">
+                <h2 id="pillar2-title">Pilier 2 — Accès & Identités</h2>
 
                 <div class="question">
                     <div class="question-title">6. Sécurité renforcée sur comptes importants</div>
@@ -776,8 +802,8 @@
             </fieldset>
 
             <!-- PILIER 3 : Sauvegardes & continuité -->
-            <fieldset>
-                <h2>Pilier 3 — Sauvegardes & Continuité</h2>
+            <fieldset aria-labelledby="pillar3-title">
+                <h2 id="pillar3-title">Pilier 3 — Sauvegardes & Continuité</h2>
 
                 <div class="question">
                     <div class="question-title">11. Sauvegarde séparée</div>
@@ -868,8 +894,8 @@
             </fieldset>
 
             <!-- PILIER 4 : Parc informatique -->
-            <fieldset>
-                <h2>Pilier 4 — Parc Informatique</h2>
+            <fieldset aria-labelledby="pillar4-title">
+                <h2 id="pillar4-title">Pilier 4 — Parc Informatique</h2>
 
                 <div class="question">
                     <div class="question-title">16. Liste claire des appareils</div>
@@ -956,8 +982,8 @@
             </fieldset>
 
             <!-- PILIER 5 : Fournisseurs & outils -->
-            <fieldset>
-                <h2>Pilier 5 — Fournisseurs & Outils</h2>
+            <fieldset aria-labelledby="pillar5-title">
+                <h2 id="pillar5-title">Pilier 5 — Fournisseurs & Outils</h2>
 
                 <div class="question">
                     <div class="question-title">21. Outils critiques identifiés</div>
@@ -1047,13 +1073,14 @@
                 </div>
             </fieldset>
 
-            <div class="buttons-container">
-                <button type="button" class="btn-calculate" onclick="calculateScore()">Calculer mon CyberScore</button>
-                <button type="button" class="btn-reset" onclick="resetForm()">Réinitialiser</button>
-            </div>
-        </form>
+                    <div class="buttons-container">
+                        <button type="button" class="btn-calculate" onclick="calculateScore()" aria-label="Calculer votre score de cybersécurité">Calculer mon CyberScore</button>
+                        <button type="button" class="btn-reset" onclick="resetForm()" aria-label="Réinitialiser le formulaire">Réinitialiser</button>
+                    </div>
+                </form>
+            </section>
 
-        <div id="result">
+            <section id="result" aria-label="Résultats de l'évaluation" aria-live="polite">
             <div class="score-letter" id="scoreLetter"></div>
             <div class="score-details" id="scoreDetails"></div>
             <div class="score-interpretation" id="scoreInterpretation"></div>
@@ -1070,22 +1097,22 @@
             </div>
 
             <!-- Actions recommandées -->
-            <div class="actions-section" id="actionsSection">
+            <section class="actions-section" id="actionsSection" aria-label="Actions recommandées">
                 <h3>Actions prioritaires recommandées</h3>
-                <div id="actionsList"></div>
-            </div>
+                <div id="actionsList" role="list"></div>
+            </section>
 
             <!-- Section d'accompagnement -->
-            <div class="accompaniment-section" id="accompanimentSection" style="display: none;">
+            <section class="accompaniment-section" id="accompanimentSection" style="display: none;" aria-label="Accompagnement professionnel">
                 <h3>Besoin d'accompagnement ?</h3>
                 <p>Votre score indique des vulnérabilités importantes qui nécessitent une attention urgente. Je peux vous aider à mettre en place un plan d'action adapté à votre TPE/PME.</p>
-                <a href="https://www.linkedin.com/in/alexandre-boigues/" target="_blank" class="btn-linkedin">
+                <a href="https://www.linkedin.com/in/alexandre-boigues/" target="_blank" class="btn-linkedin" aria-label="Contacter Alexandre Boigues sur LinkedIn (ouverture dans un nouvel onglet)">
                     Contactez-moi sur LinkedIn
                 </a>
-            </div>
+            </section>
 
             <!-- Section d'impact cyber pour scores faibles -->
-            <div class="cyber-impact-section" id="cyberImpactSection" style="display: none;">
+            <section class="cyber-impact-section" id="cyberImpactSection" style="display: none;" aria-label="Impact des cyberattaques">
                 <h3>Pourquoi il est urgent d'agir : la réalité des cyberattaques sur les TPE-PME</h3>
                 <p class="intro-text">Les chiffres parlent d'eux-mêmes. Les cyberattaques ne sont plus une menace lointaine, elles touchent massivement les TPE-PME françaises avec des conséquences dramatiques :</p>
 
@@ -1134,23 +1161,24 @@
                 <div class="impact-sources">
                     <h4>Sources :</h4>
                     <ul>
-                        <li><a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/actualites/etude-maturite-cyber-tpe-pme-2025" target="_blank">Cybermalveillance.gouv.fr - Baromètre national TPE-PME 2025</a></li>
-                        <li><a href="https://securigeek.com/cyberattaques-tpe-pme-un-enjeu-vital-pour-2024-2025/" target="_blank">Securigeek - Cyberattaques TPE/PME : un enjeu vital 2024-2025</a></li>
-                        <li><a href="https://siecledigital.fr/2024/10/02/cybersecurite-tpe-pme-les-derniers-chiffres-montrent-un-besoin-urgent-de-sensibilisation-et-dinvestissement/" target="_blank">Siècle Digital - Cybersécurité TPE-PME : les derniers chiffres</a></li>
+                        <li><a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/actualites/etude-maturite-cyber-tpe-pme-2025" target="_blank" aria-label="Cybermalveillance.gouv.fr - Baromètre national TPE-PME 2025 (ouverture dans un nouvel onglet)">Cybermalveillance.gouv.fr - Baromètre national TPE-PME 2025</a></li>
+                        <li><a href="https://securigeek.com/cyberattaques-tpe-pme-un-enjeu-vital-pour-2024-2025/" target="_blank" aria-label="Securigeek - Cyberattaques TPE/PME : un enjeu vital 2024-2025 (ouverture dans un nouvel onglet)">Securigeek - Cyberattaques TPE/PME : un enjeu vital 2024-2025</a></li>
+                        <li><a href="https://siecledigital.fr/2024/10/02/cybersecurite-tpe-pme-les-derniers-chiffres-montrent-un-besoin-urgent-de-sensibilisation-et-dinvestissement/" target="_blank" aria-label="Siècle Digital - Cybersécurité TPE-PME : les derniers chiffres (ouverture dans un nouvel onglet)">Siècle Digital - Cybersécurité TPE-PME : les derniers chiffres</a></li>
                     </ul>
                 </div>
-            </div>
+            </section>
 
             <!-- Rappel dimension humaine -->
-            <div class="human-dimension-reminder">
+            <aside class="human-dimension-reminder" aria-label="Note sur l'approche humaine">
                 <h4>Ne perdez pas de vue l'essentiel</h4>
                 <p>Ces actions techniques ne doivent pas faire oublier la dimension humaine de la cybersécurité. Mon approche prend en compte cet aspect essentiel en limitant la surcharge cognitive : des mesures simples, progressives et adaptées à votre réalité quotidienne pour protéger efficacement votre activité sans vous submerger.</p>
-            </div>
-        </div>
+            </aside>
+        </section>
+        </main>
 
-        <footer>
+        <footer role="contentinfo">
             <p>CyberScore TPE-PME - Outil de sensibilisation à la cybersécurité</p>
-            <p><a href="mentions-legales.html">Mentions légales</a> | © 2025 Alexandre Boigues</p>
+            <p><a href="mentions-legales.html" aria-label="Accéder aux mentions légales">Mentions légales</a> | © 2025 Alexandre Boigues</p>
         </footer>
     </div>
 
